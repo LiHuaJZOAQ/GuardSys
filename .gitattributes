@@ -1,0 +1,14 @@
+# 所有代码文件：统一用 LF 换行（云端/本地强制规范）
+* text=auto eol=lf
+
+#  Windows 批处理文件（.bat/.cmd）：保留 CRLF（必须，否则脚本无法运行）
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制文件（图片/压缩包等）：不处理换行符
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.pdf binary

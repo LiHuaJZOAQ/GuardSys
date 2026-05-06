@@ -1,0 +1,37 @@
+# Copyright (c) 2024
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+
+import("//build/ohos.gni")
+
+ohos_shared_library("guardsys") {
+  include_dirs = [
+    "include",
+    "//third_party/node/src",
+    "//third_party/opencv/include",      # 假设 OpenCV 已引入
+    "//third_party/SeetaFace2/include",  # 假设 SeetaFace2 已引入
+  ]
+
+  sources = [
+    "src/sensor_sht30.c",
+    "src/sensor_mq2.c",
+    "src/sensor_hc_sr501.c",
+    "src/alarm_control.c",
+    "src/face_recognize.cpp",
+    "napi/guardsys_napi.cpp"
+  ]
+
+  deps = [
+    "//third_party/opencv:opencv_world",
+    "//third_party/SeetaFace2:seeta_face_detector"
+  ]
+
+  external_deps = [
+    "napi:ace_napi",
+    "hilog:libhilog"
+  ]
+
+  # 指定生成的共享库名称：libguardsys.so
+  part_name = "guardsys"
+  subsystem_name = "sample"
+}

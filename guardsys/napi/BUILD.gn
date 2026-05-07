@@ -1,0 +1,32 @@
+import("//build/ohos.gni")
+
+ohos_shared_library("guardsys_napi") {
+    include_dirs = [
+        "//foundation/ace/napi/interfaces/kits",  # OpenHarmony NAPI 标准头文件
+        "//foundation/arkui/napi/interfaces/inner_api",
+        "../include"                             # 本项目底层驱动头文件
+    ]
+    sources = [
+        "guardsys_napi.h",
+        "guardsys_napi.cpp",
+        "sht30_napi.cpp",
+        "hc_sr501_napi.cpp",
+        "mq2_napi.cpp",
+        "alarm_napi.cpp",
+        "face_recognize_napi.cpp"
+
+        # 实现c源文件
+        "../src/sensor_sht30.c",
+        "../src/sensor_hc_sr501.c",
+        "../src/sensor_mq2.c",
+        "../src/alarm_control.c",
+        "../src/face_recognize.cpp"
+    ]
+    # 外部依赖库
+    external_deps = [
+        "napi:ace_napi",
+        "hilog:libhilog",
+        "c_utils:utils"
+    ]
+    part_name = "guardsys"
+}

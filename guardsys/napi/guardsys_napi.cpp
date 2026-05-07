@@ -1,178 +1,65 @@
-#include "napi/native_api.h"
-#include <string>
-#include <string.h>
+/**
+ * @file guardsys_napi.cpp
+ * @brief Guardsys NAPI 模块注册中枢
+ * @details 聚合所有子模块（传感器/执行器/AI）的导出描述符，
+ *          统一注册为单一动态库模块供 ArkTS 侧调用。
+ */
 
-// --- 以下为假设引入的南向 C 函数声明 ---
-extern "C" int SHT30_Config(int bus_num, int i2c_addr);
-extern "C" int SHT30_ReadData(float *temp, float *hum);
-extern "C" int MQ2_Config(int device_num, int channel);
-extern "C" int MQ2_ReadSmoke(float *concentration);
-extern "C" int HC_SR501_Config(const char* gpio_pin);
-extern "C" int HC_SR501_ReadStatus(int *isTriggered);
-extern "C" void Alarm_Config(const char* buzzer, const char* r, const char* g, const char* b);
-extern "C" int Alarm_SetStatus(int status);
-// ----------------------------------------
+#include "guardsys_napi.h"
 
-// NAPI Function: configSensorInterface
-static napi_value ConfigSensorInterface(napi_env env, napi_callback_info info) {
-    size_t argc = 2;
-    napi_value args[2] = {nullptr};
-    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+namespace guardsys::napi {
 
-    char sensorType[32] = {0};
-    size_t typeLen;
-    napi_get_value_string_utf8(env, args[0], sensorType, sizeof(sensorType), &typeLen);
-
-    // 解析针对不同传感器的配置并调用底层的 Config 函数
-    if (strcmp(sensorType, "sht30") == 0) {
-        napi_value busVal, addrVal;
-        int busNum = 4, i2cAddr = 0x44;
-        if (napi_get_named_property(env, args[1], "i2cBus", &busVal) == napi_ok) napi_get_value_int32(env, busVal, &busNum);
-        if (napi_get_named_property(env, args[1], "address", &addrVal) == napi_ok) napi_get_value_int32(env, addrVal, &i2cAddr);
-        SHT30_Config(busNum, i2cAddr);
-    } else if (strcmp(sensorType, "mq2") == 0) {
-        napi_value adcVal;
-        int adcChannel = 1; // 默认传数值 1 代表 ADC1
-        if (napi_get_named_property(env, args[1], "adcChannel", &adcVal) == napi_ok) {
-            napi_get_value_int32(env, adcVal, &adcChannel);
-        }
-        
-        // 1 代表 ADC1 (对应 channel=2), 2 代表 ADC2 (对应 channel=3)
-        int deviceNum = 0;
-        int channel = (adcChannel == 2) ? 3 : 2; 
-        MQ2_Config(deviceNum, channel);
-
-    } else if (strcmp(sensorType, "hc_sr501") == 0) {
-        napi_value pinVal;
-        int gpioPin = 1; // 默认传数值 1 代表 GPIO_1
-        if (napi_get_named_property(env, args[1], "gpioPin", &pinVal) == napi_ok) {
-            napi_get_value_int32(env, pinVal, &gpioPin);
-        }
-        
-        // 映射数值 1~16 到系统编号 380~395
-        int gpioNum = 380;
-        if (gpioPin >= 1 && gpioPin <= 16) {
-            gpioNum = 380 + (gpioPin - 1);
-        }
-        char sysPin[16];
-        sprintf(sysPin, "%d", gpioNum);
-        HC_SR501_Config(sysPin);
-
-    } else if (strcmp(sensorType, "alarm") == 0) {
-        napi_value buzzerVal, rVal, gVal, bVal;
-        int buzzerPin = 2, rPin = 3, gPin = 4, bPin = 5;
-        
-        if (napi_get_named_property(env, args[1], "buzzerPin", &buzzerVal) == napi_ok) napi_get_value_int32(env, buzzerVal, &buzzerPin);
-        if (napi_get_named_property(env, args[1], "rPin", &rVal) == napi_ok) napi_get_value_int32(env, rVal, &rPin);
-        if (napi_get_named_property(env, args[1], "gPin", &gVal) == napi_ok) napi_get_value_int32(env, gVal, &gPin);
-        if (napi_get_named_property(env, args[1], "bPin", &bVal) == napi_ok) napi_get_value_int32(env, bVal, &bPin);
-        
-        // 解析 1~16 为底层编号
-        auto parseGpio = [](int pin) -> int {
-            if (pin >= 1 && pin <= 16) return 380 + (pin - 1);
-            return 380; // fallback
-        };
-        
-        char sysBuzzer[16], sysR[16], sysG[16], sysB[16];
-        sprintf(sysBuzzer, "%d", parseGpio(buzzerPin));
-        sprintf(sysR, "%d", parseGpio(rPin));
-        sprintf(sysG, "%d", parseGpio(gPin));
-        sprintf(sysB, "%d", parseGpio(bPin));
-        
-        Alarm_Config(sysBuzzer, sysR, sysG, sysB);
-    }
-
-    napi_value ret;
-    napi_get_boolean(env, true, &ret);
-    return ret;
-}
-
-// NAPI Function: getSht30Data
-static napi_value GetSht30Data(napi_env env, napi_callback_info info) {
-    napi_value result;
-    napi_create_object(env, &result);
-    
-    float temp = 0.0, humi = 0.0;
-    if (SHT30_ReadData(&temp, &humi) == 0) {
-        napi_value tVal, hVal;
-        napi_create_double(env, temp, &tVal);
-        napi_create_double(env, humi, &hVal);
-        napi_set_named_property(env, result, "temp", tVal);
-        napi_set_named_property(env, result, "humi", hVal);
-    }
-    return result;
-}
-
-// NAPI Function: getMq2Data
-static napi_value GetMq2Data(napi_env env, napi_callback_info info) {
-    napi_value result;
-    napi_create_object(env, &result);
-    
-    float smoke = 0.0;
-    if (MQ2_ReadSmoke(&smoke) == 0) {
-        napi_value sVal;
-        napi_create_double(env, smoke, &sVal);
-        napi_set_named_property(env, result, "smoke", sVal);
-    }
-    return result;
-}
-
-// NAPI Function: getIrStatus
-static napi_value GetIrStatus(napi_env env, napi_callback_info info) {
-    napi_value result;
-    napi_create_object(env, &result);
-    
-    int ir = 0;
-    if (HC_SR501_ReadStatus(&ir) == 0) {
-        napi_value irVal;
-        napi_get_boolean(env, ir == 1, &irVal);
-        napi_set_named_property(env, result, "ir", irVal);
-    }
-    return result;
-}
-
-// NAPI Function: setAlarmStatus
-static napi_value SetAlarmStatus(napi_env env, napi_callback_info info) {
-    size_t argc = 1;
-    napi_value args[1] = {nullptr};
-    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    
-    int status = 0;
-    napi_get_value_int32(env, args[0], &status);
-    
-    // Call underlying Alarm_SetStatus(status);
-    
-    napi_value ret;
-    napi_get_undefined(env, &ret);
-    return ret;
-}
-
-// Init Function
-EXTERN_C_START
+/**
+ * @brief NAPI 模块初始化入口
+ * @details 运行时聚合各子系统的 napi_property_descriptor 数组，
+ *          通过 napi_define_properties 一次性导出至 JS 引擎。
+ *          采用安全边界检查，防止数组越界导致引擎崩溃。
+ */
 static napi_value Init(napi_env env, napi_value exports) {
-    napi_property_descriptor desc[] = {
-        {"configSensorInterface", nullptr, ConfigSensorInterface, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"getSht30Data", nullptr, GetSht30Data, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"getMq2Data", nullptr, GetMq2Data, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"getIrStatus", nullptr, GetIrStatus, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"setAlarmStatus", nullptr, SetAlarmStatus, nullptr, nullptr, nullptr, napi_default, nullptr}
+    // 预留空间容纳所有子模块接口（64 足够支撑 20+ 模块，编译期确定大小）
+    constexpr size_t MAX_DESC = 64;
+    napi_property_descriptor all_desc[MAX_DESC];
+    size_t count = 0;
+
+    // 安全聚合辅助 Lambda
+    auto append = [&](const napi_property_descriptor* src, size_t src_cnt) {
+        for (size_t i = 0; i < src_cnt && count < MAX_DESC; ++i, ++count) {
+            all_desc[count] = src[i];
+        }
     };
-    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
+
+    // 按模块追加描述符（新增模块仅需在此追加一行）
+    append(g_sht30_desc, g_sht30_desc_count);
+    append(g_sr501_desc, g_sr501_desc_count);
+    append(g_mq2_desc, g_mq2_desc_count);
+    append(g_alarm_desc, g_alarm_desc_count);
+    append(g_face_desc, g_face_desc_count);
+
+    // 统一导出至 ArkTS 侧
+    napi_define_properties(env, exports, count, all_desc);
     return exports;
 }
-EXTERN_C_END
 
-// Module definition
+} // namespace guardsys::napi
+
+/**
+ * @brief NAPI 模块注册结构体
+ * @details 指定模块名为 "guardsys"，ArkTS 侧通过 import guardsys from '@ohos.guardsys' 引入。
+ */
 static napi_module guardsysModule = {
     .nm_version = 1,
     .nm_flags = 0,
     .nm_filename = nullptr,
-    .nm_register_func = Init,
+    .nm_register_func = guardsys::napi::Init,
     .nm_modname = "guardsys",
-    .nm_priv = ((void*)0),
+    .nm_priv = nullptr,
     .reserved = {0},
 };
 
+/**
+ * @brief 动态库加载自动注册函数
+ * @details 利用 constructor 属性在 so 库被 dlopen 加载时自动调用 napi_module_register。
+ */
 extern "C" __attribute__((constructor)) void RegisterGuardsysModule(void) {
     napi_module_register(&guardsysModule);
 }

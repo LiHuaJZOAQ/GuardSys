@@ -4,6 +4,7 @@
 
 ```text
 guardsys/
+├── @ohos.guardsys.d.ts       # OHOS NAPI TypeScript 声明文件
 ├── BUILD.gn                  # 模块编译配置总文件
 ├── include/                  # 接口定义头文件
 │   ├── alarm_control.h       # 蜂鸣器与RGB LED控制头文件

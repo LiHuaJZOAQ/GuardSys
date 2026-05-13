@@ -3,7 +3,7 @@
 ## 南向项目目录结构
 
 ```text
-sample/guardsys/
+guardsys/
 ├── BUILD.gn                  # 模块编译配置总文件
 ├── include/                  # 接口定义头文件
 │   ├── alarm_control.h       # 蜂鸣器与RGB LED控制头文件

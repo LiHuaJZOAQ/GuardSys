@@ -36,18 +36,19 @@ guardsys/
 
 2.运行编译构建指令
 
-```bash
-./build.sh --product-name unionpi_tiger --ccache --build-target guardsys
-```
 
-或者
 ```bash
 ./build.sh --product-name unionpi_tiger --ccache --build-target guardsys_napi
 ```
 
-部分编译构建可以减少编译时间，防止ninja file重新编译(注意把`/home/user/OpenHarmony4.0Release/`改为实际路径)
+部分编译构建可以减少编译时间，防止ninja file重新编译(该方法仅适用于不是新增部件的情况，如果第一次编译不可使用该方法。注意把`/home/user/OpenHarmony4.0Release/`改为实际路径)
 ```bash
 /home/user/OpenHarmony4.0Release/prebuilts/build-tools/linux-x86/bin/ninja -w dupbuild=warn -C /home/user/OpenHarmony4.0Release/out/unionpi_tiger guardsys_napi
+```
+
+或者全量编译
+```bash
+./build.sh --product-name unionpi_tiger --ccache
 ```
 
 3.编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`

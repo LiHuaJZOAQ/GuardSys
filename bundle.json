@@ -1,0 +1,36 @@
+{
+    "name": "@ohos/guardsys",
+    "description": "guardsys",
+    "version": "4.0",
+    "license": "GNU Affero General Public License v3.0",
+    "private": false,
+    "segment": {
+      "destPath": "sample/guardsys"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+      "name": "guardsys",
+      "subsystem": "sample",
+      "adapted_system_type": ["standard"],
+      "deps": {
+        "components": [
+          "hilog",
+          "c_utils",
+          "hdf_core",
+          "bounds_checking_function",
+          "napi"
+        ],
+        "third_party": [
+        ]
+      },
+      "build": {
+        "sub_component": [
+            "//sample/guardsys:guardsys"
+        ],
+        "test": [
+        ],
+        "inner_kits": []
+      }
+    }
+}

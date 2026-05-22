@@ -13,7 +13,7 @@ ohos_shared_library("guardsys_napi") {
         "hc_sr501_napi.cpp",
         "mq2_napi.cpp",
         "alarm_napi.cpp",
-        "face_recognize_napi.cpp"
+        "face_recognize_napi.cpp",
 
         # 实现c源文件
         "../src/sensor_sht30.c",

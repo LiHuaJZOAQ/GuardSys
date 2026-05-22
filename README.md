@@ -32,7 +32,15 @@ guardsys/
 
 ## 编译构建
 
-1.修改`bundle.json`中相关路径和子系统名称
+1.修改`bundle.json`中相关路径和子系统名称，然后在`vendor/unionman/unionpi_tiger/config.json`中添加组件。
+```json
+{
+    "component": "guardsys",
+    "features": [
+    
+    ]
+}
+```
 
 2.运行编译构建指令
 

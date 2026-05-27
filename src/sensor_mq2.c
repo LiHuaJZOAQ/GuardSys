@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h> 
 #include <securec.h> // 提供 memset_s, strcpy_s 等安全函数
 #include "hilog/log.h" // 假定日志组件，实际可按需替换
 

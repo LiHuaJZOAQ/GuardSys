@@ -49,7 +49,7 @@ guardsys/
 ./build.sh --product-name unionpi_tiger --ccache --build-target guardsys_napi
 ```
 
-部分编译构建可以减少编译时间，防止ninja file重新编译(该方法仅适用于不是新增部件的情况，如果第一次编译不可使用该方法。注意把`/home/user/OpenHarmony4.0Release/`改为实际路径)
+直接使用ninja构建可以减少编译时间，防止ninja file重新编译(该方法仅适用于目标不是新增部件的情况，如果第一次编译不可使用该方法。注意把`/home/user/OpenHarmony4.0Release/`改为实际路径)
 ```bash
 /home/user/OpenHarmony4.0Release/prebuilts/build-tools/linux-x86/bin/ninja -w dupbuild=warn -C /home/user/OpenHarmony4.0Release/out/unionpi_tiger guardsys_napi
 ```
@@ -61,6 +61,28 @@ guardsys/
 
 3.编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`
 
-## 注意事项
+## 项目进度
 
-项目开发中，目前项目中已有代码未经验证，谨慎参考
+> [!WARNING]
+> 项目开发中，目前项目中已有代码未经验证，谨慎参考
+
+### 基本传感器的NAPI
+
+- [x] 【NAPI-1/4】完成SHT30的NAPI编写（未验证）
+- [ ]  SHT30的NAPI验证通过
+- [x] 【NAPI-2/4】完成HC-SR501的NAPI编写（未验证）
+- [ ]  HC-SR501的NAPI验证通过
+- [x] 【NAPI-3/4】完成MQ-2的NAPI编写（未验证）
+- [ ]  MQ-2的NAPI验证通过
+- [x] 【NAPI-4/4】完成蜂鸣器与RGB LED的NAPI编写（未验证）
+- [ ]  蜂鸣器与RGB LED的NAPI验证通过
+- [x]  NAPI编译通过
+- [ ]  NAPI验证通过
+
+### 人脸识别模块
+
+- [ ]  OpenCV库移植
+- [ ]  Seetaface库移植
+- [ ]  人脸识别模块NAPI编写
+- [ ]  人脸识别模块编译通过
+- [ ]  人脸识别模块NAPI验证通过

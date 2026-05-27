@@ -1,4 +1,7 @@
-declare namespace guardsys {
+declare namespace guardsys_napi {
+//    前端有问题时加入下面文档注释
+//    * @since 9
+//    * @syscap SystemCapability.Ability.AbilityRuntime.AbilityCore
     /**
      * 异步获取 SHT30 温湿度
      * @param i2cBus I2C总线号 (如 4)
@@ -13,4 +16,4 @@ declare namespace guardsys {
      */
     function getIrStatus(gpioPin: number): Promise<{ ir: boolean }>;
 }
-export default guardsys;
+export default guardsys_napi;

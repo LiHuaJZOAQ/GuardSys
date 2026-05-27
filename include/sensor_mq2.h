@@ -13,6 +13,12 @@
 
 #include <stdint.h>
 
+#include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief 获取 MQ-2 传感器的烟雾浓度 (ppm)
  *
@@ -25,5 +31,9 @@
  *         - -3: 读取 ADC 节点数据错误
  */
 int get_mq2_smoke_ppm(int adc_channel);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // SENSOR_MQ2_H

@@ -9,6 +9,13 @@
 #ifndef ALARM_CONTROL_H
 #define ALARM_CONTROL_H
 
+
+#include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief 设置报警状态，控制蜂鸣器与 RGB LED
  * @param status     报警等级: 0 - 正常，1 - 警告，2 - 报警
@@ -23,5 +30,9 @@
  *     -4: 无效的报警状态
  */
 int alarm_control_set(int status, int buzzerPin, int rPin, int gPin, int bPin);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ALARM_CONTROL_H

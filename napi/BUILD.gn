@@ -5,6 +5,15 @@ ohos_shared_library("guardsys_napi") {
         "//foundation/ace/napi/interfaces/kits",  # OpenHarmony NAPI 标准头文件
         "//foundation/arkui/napi/interfaces/inner_api",
         "../include"                             # 本项目底层驱动头文件
+        "//third_party/opencv/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/objdetect/include",
+        "//third_party/SeetaFace2/FaceDetector/include/seeta",
+        "//third_party/SeetaFace2/FaceLandmarker/include/seeta",
+        "//third_party/SeetaFace2/FaceRecognizer/include/seeta",
+        "//third_party/SeetaFace2/QualityAssessor/include/seeta",
     ]
     sources = [
         "guardsys_napi.h",
@@ -28,5 +37,18 @@ ohos_shared_library("guardsys_napi") {
         "hilog:libhilog",
         "c_utils:utils"
     ]
+
+    deps = [
+        "//third_party/opencv:opencv",
+        "//third_party/SeetaFace2:SeetaFace2"
+    ]
+
+    cflags_cc = [
+        "-std=c++17",
+        "-fexceptions",
+        "-frtti",
+        "-O2",
+    ]
+
     part_name = "guardsys"
 }

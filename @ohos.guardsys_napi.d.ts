@@ -3,6 +3,62 @@ declare namespace guardsys_napi {
 //    * @since 9
 //    * @syscap SystemCapability.Ability.AbilityRuntime.AbilityCore
     
+    //new face modules , to check , without any verification
+
+    
+    /**
+     * 人脸矩形框结构
+     */
+    interface FaceRect {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+    }
+
+    /**
+     * 人脸注册参数
+     */
+    interface FaceRegisterParams {
+        name: string;
+        images: string[];
+    }
+
+    /**
+     * 初始化人脸识别引擎
+     * @returns Promise<number> 0 成功，<0 失败
+     */
+    function faceInit(): Promise<number>;
+
+    /**
+     * 释放人脸识别引擎资源
+     * @returns Promise<number> 0 成功
+     */
+    function faceDeinit(): Promise<number>;
+
+    /**
+     * 获取图片中的人脸框坐标
+     * @param imagePath 图片路径
+     * @returns Promise<FaceRect[]> 人脸框数组
+     */
+    function getFaceRects(imagePath: string): Promise<FaceRect[]>;
+
+    /**
+     * 注册人脸到识别引擎
+     * @param params 注册参数 { name, images }
+     * @returns Promise<number> 成功注册的图片数量
+     */
+    function faceRegister(params: FaceRegisterParams): Promise<number>;
+
+    /**
+     * 识别图片中的人脸
+     * @param imagePath 图片路径
+     * @returns Promise<string> 识别结果（姓名或错误信息）
+     */
+    function faceRecognize(imagePath: string): Promise<string>;
+    //new face modules end
+
+
     /**
      * 异步获取 SHT30 温湿度
      * @param i2cBus I2C总线号 (如 4)

@@ -10,10 +10,11 @@ ohos_shared_library("guardsys_napi") {
         "//third_party/opencv/modules/imgproc/include",
         "//third_party/opencv/modules/imgcodecs/include",
         "//third_party/opencv/modules/objdetect/include",
-        "//third_party/SeetaFace2/FaceDetector/include/seeta",
-        "//third_party/SeetaFace2/FaceLandmarker/include/seeta",
-        "//third_party/SeetaFace2/FaceRecognizer/include/seeta",
-        "//third_party/SeetaFace2/QualityAssessor/include/seeta",
+        "//third_party/SeetaFace2/FaceDetector/include",
+        "//third_party/SeetaFace2/FaceLandmarker/include",
+        "//third_party/SeetaFace2/FaceRecognizer/include",
+        "//third_party/SeetaFace2/QualityAssessor/include",
+        "//third_party/SeetaFace2/example/search/seeta",
     ]
     sources = [
         "guardsys_napi.h",

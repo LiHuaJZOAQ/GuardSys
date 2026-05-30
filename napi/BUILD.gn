@@ -4,7 +4,7 @@ ohos_shared_library("guardsys_napi") {
     include_dirs = [
         "//foundation/ace/napi/interfaces/kits",  # OpenHarmony NAPI 标准头文件
         "//foundation/arkui/napi/interfaces/inner_api",
-        "../include"                             # 本项目底层驱动头文件
+        "../include",                             # 本项目底层驱动头文件
         "//third_party/opencv/include",
         "//third_party/opencv/modules/core/include",
         "//third_party/opencv/modules/imgproc/include",

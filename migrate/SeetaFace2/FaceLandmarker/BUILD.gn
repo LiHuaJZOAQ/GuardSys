@@ -1,0 +1,42 @@
+import("//build/ohos.gni")
+
+ohos_shared_library("seeta_facelandmarker_lib") {
+    sources = [
+        "src/seeta/FaceLandmarker.cpp",
+    ]
+    
+    include_dirs = [
+        "include",
+        ".",
+        "seeta",
+        "include/seeta",
+        "//third_party/opencv/include",
+    ]
+    
+    deps = [
+        "//third_party/opencv:opencv",
+    ]
+    
+    cflags_cc = [
+        "-std=c++17",
+        "-fexceptions",     # 允许使用异常处理
+        "-frtti",   
+        "-Wno-pessimizing-move",    # 允许使用移动语义，即使编译器认为可能会导致性能下降
+        "-Wno-error=pessimizing-move",
+        "-O2",
+    ]
+
+    # Openharmony启用异常和RTTI(参考build/templates/cxx/cxx.gni,build/templates/rust/rust_template.gni)
+    use_exceptions = true
+    use_rtti = true
+
+    # Openharmony没有实现remove_cflags_cc,编译错误
+    # 移除全局的 -fno-exceptions 和 -fno-rtti
+    # remove_cflags_cc = [
+    #    "-fno-exceptions",
+    #    "-fno-rtti",
+    #]
+    
+    part_name = "seetaface2"
+    subsystem_name = "thirdparty"
+}

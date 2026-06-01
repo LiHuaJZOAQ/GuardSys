@@ -6,6 +6,7 @@ group("SeetaFace2") {
         "//third_party/SeetaFace2/FaceLandmarker:seeta_facelandmarker_lib",
         "//third_party/SeetaFace2/FaceRecognizer:seeta_facerecognizer_lib",
         "//third_party/SeetaFace2/QualityAssessor:seeta_qualityassessor_lib",
+        "//third_party/SeetaFace2/SeetaNet:seetanet",
         # "//third_party/SeetaFace2/FaceTracker:seeta_facetracker_lib",
     ]
 }

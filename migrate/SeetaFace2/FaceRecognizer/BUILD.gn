@@ -11,6 +11,7 @@ ohos_shared_library("seeta_facerecognizer_lib") {
         "seeta",
         "include/seeta",
         "//third_party/opencv/include",
+        "//third_party/SeetaFace2/SeetaNet/include",
     ]
     
     deps = [
@@ -36,6 +37,9 @@ ohos_shared_library("seeta_facerecognizer_lib") {
     #    "-fno-exceptions",
     #    "-fno-rtti",
     #]
+
+    
+    cflags_cc += [ "-Wno-error" ]
     
     part_name = "seetaface2"
     subsystem_name = "thirdparty"

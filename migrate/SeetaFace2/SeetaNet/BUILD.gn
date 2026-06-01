@@ -1,17 +1,21 @@
 import("//build/ohos.gni")
 
-ohos_shared_library("seeta_facetracker_lib") {
+ohos_shared_library("seetanet") {
     sources = [
-        "src/seeta/FaceTracker.cpp",
+        "src/SeetaNetParseProto.cpp",
+        "src/SeetaNetIm2Col.cpp",
+        "src/SeetaNetProto.cpp",
+        "src/SeetaNetForward.cpp",
+        "src/SeetaNetMathCPU.cpp",
+        "src/SeetaNet.cpp",
+        "src/ReadFromSeetaNetLayer.cpp"
     ]
     
     include_dirs = [
         "include",
         ".",
-        "seeta",
-        "include/seeta",
+        "src/include_inner",
         "//third_party/opencv/include",
-        "//third_party/SeetaFace2/SeetaNet/include",
     ]
     
     deps = [

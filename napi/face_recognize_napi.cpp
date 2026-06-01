@@ -207,7 +207,8 @@ static void FaceRecognizeCompleteCB(napi_env env, napi_status status, void* data
 // ================= NAPI 导出函数 =================
 
 static napi_value FaceInit(napi_env env, napi_callback_info info) {
-    napi_value promise, deferred;
+    napi_value promise;
+    napi_deferred deferred;
     napi_create_promise(env, &deferred, &promise);
     
     auto* ctx = new FaceAsyncContext();
@@ -219,7 +220,8 @@ static napi_value FaceInit(napi_env env, napi_callback_info info) {
 }
 
 static napi_value FaceDeinit(napi_env env, napi_callback_info info) {
-    napi_value promise, deferred;
+    napi_value promise;
+    napi_deferred deferred;
     napi_create_promise(env, &deferred, &promise);
     
     auto* ctx = new FaceAsyncContext();
@@ -240,7 +242,8 @@ static napi_value GetFaceRects(napi_env env, napi_callback_info info) {
         return nullptr;
     }
     
-    napi_value promise, deferred;
+    napi_value promise;
+    napi_deferred deferred;
     napi_create_promise(env, &deferred, &promise);
     
     auto* ctx = new FaceAsyncContext();
@@ -266,7 +269,8 @@ static napi_value FaceRegister(napi_env env, napi_callback_info info) {
         return nullptr;
     }
     
-    napi_value promise, deferred;
+    napi_value promise;
+    napi_deferred deferred;
     napi_create_promise(env, &deferred, &promise);
     
     auto* ctx = new FaceAsyncContext();
@@ -317,7 +321,8 @@ static napi_value FaceRecognize(napi_env env, napi_callback_info info) {
         return nullptr;
     }
     
-    napi_value promise, deferred;
+    napi_value promise;
+    napi_deferred deferred;
     napi_create_promise(env, &deferred, &promise);
     
     auto* ctx = new FaceAsyncContext();

@@ -16,6 +16,10 @@ ohos_shared_library("seetanet") {
         ".",
         "src/include_inner",
         "//third_party/opencv/include",
+        "//third_party/SeetaFace2/SeetaNet/src/include_inner/layers",
+        "//third_party/SeetaFace2/SeetaNet/src/orz/tools",
+        "//third_party/SeetaFace2/SeetaNet/src/orz/sync",
+        "//third_party/SeetaFace2/SeetaNet/src/orz/mem",
     ]
     
     deps = [

@@ -15,7 +15,7 @@
 #include "../../../third_party/SeetaFace2/example/search/seeta/FaceEngine.h"
 #include "opencv2/opencv.hpp"
 
-namespace guardsys {
+
 
 // 人脸矩形框结构
 struct FaceRect {
@@ -78,6 +78,5 @@ std::string FaceSearchRecognize(FaceSearchInfo& info, const std::string& imagePa
  */
 int GetFaceRects(const std::string& imagePath, FaceRect* rects, int maxRects);
 
-} // namespace guardsys
 
 #endif // FACE_RECOGNIZE_H

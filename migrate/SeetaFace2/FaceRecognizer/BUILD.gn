@@ -3,6 +3,12 @@ import("//build/ohos.gni")
 ohos_shared_library("seeta_facerecognizer_lib") {
     sources = [
         "src/seeta/FaceRecognizer.cpp",
+        "src/seeta/FaceDatabase.cpp",
+        "seeta/SeetaNetParseProto.cpp",
+        "seeta/ImageProcess.cpp",
+        "seeta/common_alignment.cpp",
+        "seeta/FaceRecognizerPrivate.cpp",
+        "seeta/graphics2d.cpp"
     ]
     
     include_dirs = [

@@ -4,7 +4,10 @@ ohos_shared_library("seeta_qualityassessor_lib") {
     sources = [
         "src/QualityAssessor.cpp",
         "src/PoseQuality.cpp",
-        "src/ClarityQuality.cpp"
+        "src/ClarityQuality.cpp",
+        "seeta/ImageProcess.cpp",
+        "seeta/common_alignment.cpp",
+        "seeta/graphics2d.cpp",
     ]
     
     include_dirs = [

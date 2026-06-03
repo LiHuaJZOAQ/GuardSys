@@ -6,6 +6,12 @@ ohos_shared_library("seetanet") {
         "src/SeetaNetIm2Col.cpp",
         "src/SeetaNetProto.cpp",
         "src/SeetaNetForward.cpp",
+        "src/orz/tools/box.cpp",
+        "src/orz/sync/canyon.cpp",
+        "src/orz/sync/cartridge.cpp",
+        "src/orz/sync/shotgun.cpp",
+        "src/orz/mem/pot.cpp",
+        "src/orz/mem/vat.cpp",
         "src/SeetaNetMathCPU.cpp",
         "src/SeetaNet.cpp",
         "src/ReadFromSeetaNetLayer.cpp"
@@ -18,6 +24,7 @@ ohos_shared_library("seetanet") {
         "//third_party/opencv/include",
         "//third_party/SeetaFace2/SeetaNet/src/include_inner/layers",
         "//third_party/SeetaFace2/SeetaNet/src/orz/tools",
+        "//third_party/SeetaFace2/SeetaNet/src",
         "//third_party/SeetaFace2/SeetaNet/src/orz/sync",
         "//third_party/SeetaFace2/SeetaNet/src/orz/mem",
     ]

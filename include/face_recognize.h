@@ -12,6 +12,7 @@
 #include "seeta/FaceLandmarker.h"
 #include "seeta/FaceRecognizer.h"
 #include "seeta/QualityAssessor.h"
+#include "seeta/CFaceInfo.h"
 #include "../../../third_party/SeetaFace2/example/search/seeta/FaceEngine.h"
 #include "opencv2/opencv.hpp"
 

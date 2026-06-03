@@ -79,8 +79,12 @@ int FaceSearchRegister(FaceSearchInfo& info, const RegisterInfo& regInfo) {
             return -2;
         }
         
-        seeta::ImageData imageData = image;
-        
+        seeta::ImageData imageData;
+        imageData.data = image.data;
+        imageData.width = image.cols;
+        imageData.height = image.rows;
+        imageData.channels = image.channels();   
+
         // 注册人脸
         auto id = info.engine->Register(imageData);
         if (id >= 0) {
@@ -111,13 +115,20 @@ std::string FaceSearchRecognize(FaceSearchInfo& info, const std::string& imagePa
             return "recognize error: cannot read image";
         }
         
-        seeta::ImageData image = frame;
+        seeta::ImageData image;
+        image.data = frame.data;
+        image.width = frame.cols;
+        image.height = frame.rows;
+        image.channels = frame.channels();
+
         seeta::QualityAssessor QA;
         float threshold = 0.7f;
         
         // 检测人脸
-        std::vector<seeta::FaceInfo> faces = info.engine->DetectFaces(image);
-        
+        SeetaFaceInfoArray faceArray = info.engine->DetectFaces(image);
+        std::vector<SeetaFaceInfo> faces(faceArray.data, faceArray.data + faceArray.size);
+
+
         for (const auto& face : faces) {
             // 检测关键点
             auto points = info.engine->DetectPoints(image, face);
@@ -169,7 +180,11 @@ int GetFaceRects(const std::string& imagePath, FaceRect* rects, int maxRects) {
             return -2;
         }
         
-        seeta::ImageData image = frame;
+        seeta::ImageData image;
+        image.data = frame.data;
+        image.width = frame.cols;
+        image.height = frame.rows;
+        image.channels = frame.channels();
         
         // 使用全局引擎或临时创建检测器
         seeta::ModelSetting::Device device = seeta::ModelSetting::CPU;

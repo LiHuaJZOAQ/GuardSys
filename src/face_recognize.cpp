@@ -125,9 +125,7 @@ std::string FaceSearchRecognize(FaceSearchInfo& info, const std::string& imagePa
         float threshold = 0.7f;
         
         // 检测人脸
-        SeetaFaceInfoArray faceArray = info.engine->DetectFaces(image);
-        std::vector<SeetaFaceInfo> faces(faceArray.data, faceArray.data + faceArray.size);
-
+        std::vector<SeetaFaceInfo> faces = info.engine->DetectFaces(image);
 
         for (const auto& face : faces) {
             // 检测关键点

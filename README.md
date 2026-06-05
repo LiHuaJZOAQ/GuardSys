@@ -81,8 +81,8 @@ guardsys/
 
 ### 人脸识别模块
 
-- [ ]  OpenCV库移植
-- [ ]  Seetaface库移植
-- [ ]  人脸识别模块NAPI编写
-- [ ]  人脸识别模块编译通过
+- [x]  OpenCV库移植
+- [x]  Seetaface库移植
+- [x]  人脸识别模块NAPI编写
+- [x]  人脸识别模块编译通过
 - [ ]  人脸识别模块NAPI验证通过

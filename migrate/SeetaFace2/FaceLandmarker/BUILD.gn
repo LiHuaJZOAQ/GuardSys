@@ -1,6 +1,6 @@
 import("//build/ohos.gni")
 
-ohos_shared_library("seeta_facelandmarker_lib") {
+ohos_shared_library("facelandmarker") {
     sources = [
         "src/seeta/FaceLandmarker.cpp",
         "seeta/FaceLandmarkerPrivate.cpp",
@@ -20,6 +20,7 @@ ohos_shared_library("seeta_facelandmarker_lib") {
     
     deps = [
         "//third_party/opencv:opencv",
+        "//third_party/SeetaFace2/SeetaNet:seetanet",
     ]
     
     cflags_cc = [

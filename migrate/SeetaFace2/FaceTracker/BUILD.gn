@@ -1,6 +1,6 @@
 import("//build/ohos.gni")
 
-ohos_shared_library("seeta_facetracker_lib") {
+ohos_shared_library("facetracker") {
     sources = [
         "src/seeta/FaceTracker.cpp",
     ]
@@ -16,6 +16,7 @@ ohos_shared_library("seeta_facetracker_lib") {
     
     deps = [
         "//third_party/opencv:opencv",
+        "//third_party/SeetaFace2/SeetaNet:seetanet",
     ]
     
     cflags_cc = [

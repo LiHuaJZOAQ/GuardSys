@@ -2,11 +2,11 @@ import("//build/ohos.gni")
 
 group("SeetaFace2") {
     deps = [
-        "//third_party/SeetaFace2/FaceDetector:seeta_facedet_lib",
-        "//third_party/SeetaFace2/FaceLandmarker:seeta_facelandmarker_lib",
-        "//third_party/SeetaFace2/FaceRecognizer:seeta_facerecognizer_lib",
-        "//third_party/SeetaFace2/QualityAssessor:seeta_qualityassessor_lib",
         "//third_party/SeetaFace2/SeetaNet:seetanet",
-        # "//third_party/SeetaFace2/FaceTracker:seeta_facetracker_lib",
+        "//third_party/SeetaFace2/FaceDetector:facedetector",
+        "//third_party/SeetaFace2/FaceLandmarker:facelandmarker",
+        "//third_party/SeetaFace2/FaceRecognizer:facerecognizer",
+        "//third_party/SeetaFace2/QualityAssessor:qualityassessor",
+        # "//third_party/SeetaFace2/FaceTracker:facetracker",
     ]
 }

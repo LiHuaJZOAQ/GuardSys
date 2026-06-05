@@ -1,6 +1,6 @@
 import("//build/ohos.gni")
 
-ohos_shared_library("seeta_facedet_lib") {
+ohos_shared_library("facedetector") {
     sources = [
         "src/seeta/FaceDetector.cpp",
         "seeta/FaceDetectorPrivate.cpp",
@@ -20,6 +20,7 @@ ohos_shared_library("seeta_facedet_lib") {
     
     deps = [
         "//third_party/opencv:opencv",
+        "//third_party/SeetaFace2/SeetaNet:seetanet",
     ]
     
     cflags_cc = [

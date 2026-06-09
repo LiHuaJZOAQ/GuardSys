@@ -3,5 +3,6 @@ import("//build/ohos.gni")
 group("guardsys"){
   deps = [
     "napi:guardsys_napi",
+    "test:guardsys_test",
   ]
 }

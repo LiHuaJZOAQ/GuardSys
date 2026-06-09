@@ -1,0 +1,105 @@
+import("//build/ohos.gni")
+
+ohos_executable("guardsys_test") {
+    # 启用 C++ 异常和 RTTI (与 napi 保持一致)
+    use_exceptions = true
+    use_rtti = true
+
+    # 包含路径 (与 napi/BUILD.gn 保持一致)
+    include_dirs = [
+        "../include",
+        "//third_party/opencv/include",
+        "//third_party/opencv/build",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/objdetect/include",
+        "//third_party/SeetaFace2/FaceDetector/include",
+        "//third_party/SeetaFace2/FaceLandmarker/include",
+        "//third_party/SeetaFace2/FaceRecognizer/include",
+        "//third_party/SeetaFace2/QualityAssessor/include",
+        "//third_party/SeetaFace2/example/search/seeta",
+        "//third_party/SeetaFace2/SeetaNet/include",
+
+        # OpenCV 所有 include 目录
+        "//third_party/opencv/platforms/semihosting/include",
+        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/include",
+        "//third_party/opencv/3rdparty/ffmpeg/include",
+        "//third_party/opencv/3rdparty/include",
+        "//third_party/opencv/3rdparty/openvx/include",
+        "//third_party/opencv/3rdparty/carotene/include",
+        "//third_party/opencv/3rdparty/quirc/include",
+        "//third_party/opencv/3rdparty/ittnotify/include",
+        "//third_party/opencv/modules/imgproc/include",
+        "//third_party/opencv/modules/video/include",
+        "//third_party/opencv/modules/videoio/include",
+        "//third_party/opencv/modules/photo/include",
+        "//third_party/opencv/modules/gapi/include",
+        "//third_party/opencv/modules/calib3d/include",
+        "//third_party/opencv/modules/core/include",
+        "//third_party/opencv/modules/features2d/include",
+        "//third_party/opencv/modules/imgcodecs/include",
+        "//third_party/opencv/modules/stitching/include",
+        "//third_party/opencv/modules/highgui/include",
+        "//third_party/opencv/modules/world/include",
+        "//third_party/opencv/modules/ml/include",
+        "//third_party/opencv/modules/ts/include",
+        "//third_party/opencv/modules/dnn/include",
+        "//third_party/opencv/modules/dnn/src/vkcom/include",
+        "//third_party/opencv/modules/dnn/src/ocl4dnn/include",
+        "//third_party/opencv/modules/dnn/src/tengine4dnn/include",
+        "//third_party/opencv/modules/flann/include",
+        "//third_party/opencv/modules/objdetect/include",
+        "//third_party/opencv/samples/ohos_samples/opencv_app_sample/entry/src/main/cpp/include",
+        "//third_party/opencv/samples/semihosting/include",
+        "//third_party/opencv/napi/common/log/include",
+        "//third_party/opencv/napi/js/napi/include",
+    ]
+
+    # 源文件
+    sources = [
+        "main.cpp",
+
+        # 底层实现源文件 (与 napi 引用的相同)
+        "../src/sensor_sht30.c",
+        "../src/sensor_hc_sr501.c",
+        "../src/sensor_mq2.c",
+        "../src/alarm_control.c",
+        "../src/face_recognize.cpp",
+    ]
+
+    # 外部依赖
+    external_deps = [
+        "hilog:libhilog",
+        "c_utils:utils",
+    ]
+
+    # 第三方库依赖
+    deps = [
+        "//third_party/opencv:opencv",
+        "//third_party/SeetaFace2:SeetaFace2",
+    ]
+
+    # C++ 编译选项 (与 napi 保持一致)
+    cflags_cc = [
+        "-std=c++17",
+        "-fexceptions",
+        "-frtti",
+        "-O2",
+        "-Wno-error",
+    ]
+
+    # C 编译选项
+    cflags = [
+        "-std=c11",
+        "-O2",
+        "-Wno-error",
+    ]
+
+    # 安装配置
+    install_enable = true
+    part_name = "guardsys"
+
+    # 输出名称
+    output_name = "guardsys_test"
+}

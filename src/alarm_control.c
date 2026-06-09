@@ -108,15 +108,15 @@ int alarm_control_set(int status, int buzzerPin, int rPin, int gPin, int bPin) {
     // 2. 根据状态确定各引脚电平
     switch (status) {
         case 0: // 正常
-            buzzerLevel = 0;
-            rLevel = 0; gLevel = 0; bLevel = 0;
+            buzzerLevel = 1; 
+            rLevel = 0; gLevel = 1; bLevel = 0;
             break;
         case 1: // 警告：蜂鸣器响 + 黄灯(R+G)
-            buzzerLevel = 1;
+            buzzerLevel = 0;
             rLevel = 1; gLevel = 1; bLevel = 0;
             break;
         case 2: // 报警：蜂鸣器响 + 红灯
-            buzzerLevel = 1;
+            buzzerLevel = 0;
             rLevel = 1; gLevel = 0; bLevel = 0;
             break;
         default:

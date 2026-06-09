@@ -340,16 +340,12 @@ static napi_value FaceRecognize(napi_env env, napi_callback_info info) {
 
 // ================= 模块描述符导出 =================
 
-// napi_property_descriptor g_face_desc[] = {
-//     DECLARE_NAPI_FUNCTION("faceInit", FaceInit),
-//     DECLARE_NAPI_FUNCTION("faceDeinit", FaceDeinit),
-//     DECLARE_NAPI_FUNCTION("getFaceRects", GetFaceRects),
-//     DECLARE_NAPI_FUNCTION("faceRegister", FaceRegister),
-//     DECLARE_NAPI_FUNCTION("faceRecognize", FaceRecognize),
-// };
-
-//debug 
 napi_property_descriptor g_face_desc[] = {
+    DECLARE_NAPI_FUNCTION("faceInit", FaceInit),
+    DECLARE_NAPI_FUNCTION("faceDeinit", FaceDeinit),
+    DECLARE_NAPI_FUNCTION("getFaceRects", GetFaceRects),
+    DECLARE_NAPI_FUNCTION("faceRegister", FaceRegister),
+    DECLARE_NAPI_FUNCTION("faceRecognize", FaceRecognize),
 };
 
 size_t g_face_desc_count = sizeof(g_face_desc) / sizeof(g_face_desc[0]);

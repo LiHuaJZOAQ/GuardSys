@@ -101,10 +101,10 @@ declare namespace guardsys_napi {
      * 异步控制报警声光设备 (蜂鸣器与RGB LED)
      * @param status 报警等级 (0: 正常, 1: 警告, 2: 报警)
      * @param pins 执行器引脚分配映射
-     * @param pins.buzzerPin 蜂鸣器引脚编号
-     * @param pins.rPin RGB红灯引脚编号
-     * @param pins.gPin RGB绿灯引脚编号
-     * @param pins.bPin RGB蓝灯引脚编号
+     * @param pins.buzzerPin 蜂鸣器引脚编号(物理引脚，如380)
+     * @param pins.rPin RGB红灯引脚编号(物理引脚，如380)
+     * @param pins.gPin RGB绿灯引脚编号(物理引脚，如380)
+     * @param pins.bPin RGB蓝灯引脚编号(物理引脚，如380)
      * @returns Promise<void>
      * @since 9
      * @syscap SystemCapability.Ability.AbilityRuntime.AbilityCore

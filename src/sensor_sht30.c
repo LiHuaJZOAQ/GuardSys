@@ -50,54 +50,55 @@ int sht30_read_data(int i2c_bus, uint8_t address, Sht30DataResult *out_data)
     snprintf(dev_path, sizeof(dev_path), "/dev/i2c-%d", i2c_bus);
 
     int fd = open(dev_path, O_RDWR);
-    if (fd < 0)
+    if (fd < 0) {
+        printf("SHT30: 无法打开设备 %s, errno=%d\n", dev_path, errno);
         return -2;
+    }
 
-    // 配置 I2C 超时与重试机制
-    ioctl(fd, I2C_TIMEOUT, 1);
-    ioctl(fd, I2C_RETRIES, 2);
-    if (ioctl(fd, I2C_SLAVE, address) < 0)
-    {
+    // 设置从机地址
+    if (ioctl(fd, I2C_SLAVE, address) < 0) {
+        printf("SHT30: 设置从机地址 0x%02X 失败, errno=%d\n", address, errno);
         close(fd);
         return -3;
     }
 
-    // 构造单次读取命令
-    uint8_t cmd[] = {(uint8_t)((SHT30_CMD_SINGLE_HIGH >> 8) & 0xFF),
-                     (uint8_t)(SHT30_CMD_SINGLE_HIGH & 0xFF)};
-    uint8_t read_buf[6] = {0}; // 2B Temp + 1B CRC + 2B Humi + 1B CRC
+    // ========== 步骤 1: 发送测量命令 ==========
+    uint8_t cmd[] = {
+        (uint8_t)((SHT30_CMD_SINGLE_HIGH >> 8) & 0xFF),
+        (uint8_t)(SHT30_CMD_SINGLE_HIGH & 0xFF)
+    };
 
-    struct i2c_msg msgs[2];
-    struct i2c_rdwr_ioctl_data i2c_data;
-
-    msgs[0].addr = address;
-    msgs[0].flags = 0;
-    msgs[0].len = 2;
-    msgs[0].buf = cmd;
-    msgs[1].addr = address;
-    msgs[1].flags = I2C_M_RD;
-    msgs[1].len = 6;
-    msgs[1].buf = read_buf;
-
-    i2c_data.msgs = msgs;
-    i2c_data.nmsgs = 2;
-
-    // 执行 I2C 组合读写事务
-    if (ioctl(fd, I2C_RDWR, &i2c_data) < 0)
-    {
+    if (write(fd, cmd, 2) != 2) {
+        printf("SHT30: 发送命令失败, errno=%d\n", errno);
         close(fd);
         return -4;
     }
 
-    // CRC 校验
-    if (sht30_calc_crc(read_buf, 2) != read_buf[2] ||
-        sht30_calc_crc(read_buf + 3, 2) != read_buf[5])
-    {
+    // ========== 步骤 2: 等待测量完成 ==========
+    // 高重复精度模式需要约 15ms，这里给 20ms 保证稳定
+    usleep(20000);  // 20ms = 20000 微秒
+
+    // ========== 步骤 3: 读取数据 ==========
+    uint8_t read_buf[6] = {0};
+    if (read(fd, read_buf, 6) != 6) {
+        printf("SHT30: 读取数据失败, errno=%d\n", errno);
         close(fd);
         return -5;
     }
 
-    // 原始数据转换
+    // ========== 步骤 4: CRC 校验 ==========
+    if (sht30_calc_crc(read_buf, 2) != read_buf[2] ||
+        sht30_calc_crc(read_buf + 3, 2) != read_buf[5]) {
+        printf("SHT30: CRC 校验失败\n");
+        printf("  温度 CRC: 计算=0x%02X, 接收=0x%02X\n", 
+               sht30_calc_crc(read_buf, 2), read_buf[2]);
+        printf("  湿度 CRC: 计算=0x%02X, 接收=0x%02X\n", 
+               sht30_calc_crc(read_buf + 3, 2), read_buf[5]);
+        close(fd);
+        return -6;
+    }
+
+    // ========== 步骤 5: 数据转换 ==========
     uint16_t raw_temp = ((uint16_t)read_buf[0] << 8) | read_buf[1];
     uint16_t raw_humi = ((uint16_t)read_buf[3] << 8) | read_buf[4];
 

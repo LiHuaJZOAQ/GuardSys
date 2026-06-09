@@ -59,7 +59,12 @@ guardsys/
 ./build.sh --product-name unionpi_tiger --ccache
 ```
 
-3.编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`
+3.编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`，可以将其推送至开发板。
+```bash
+hdc shell mount -o remount,rw /
+hdc file send libguardsys_napi.z.so /system/lib/module
+```
+注意需要同步推送opencv和seetaface的库文件，否则会报错，任何一个NAPI都无法使用。
 
 ## 项目进度
 

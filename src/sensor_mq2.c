@@ -149,7 +149,7 @@ static float adc_to_ppm(int filtered_adc)
 
 /* ========== 公开接口 ========== */
 
-int get_mq2_smoke_ppm(int adc_channel)
+float get_mq2_smoke_ppm(int adc_channel)
 {
     int raw = get_adc_value(adc_channel);
     if (raw < 0) {
@@ -160,7 +160,7 @@ int get_mq2_smoke_ppm(int adc_channel)
     int filtered = filter_adc_value(raw);
     float ppm = adc_to_ppm(filtered);
 
-    return (int)(ppm + 0.5f);
+    return (ppm + 0.5f);
 }
 
 /**

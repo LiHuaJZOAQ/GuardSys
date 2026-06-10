@@ -30,7 +30,7 @@ extern "C" {
  *         - -2: 打开 ADC 节点失败
  *         - -3: 读取 ADC 节点数据错误
  */
-int get_mq2_smoke_ppm(int adc_channel);
+float get_mq2_smoke_ppm(int adc_channel);
 
 #ifdef __cplusplus
 }

@@ -30,13 +30,11 @@ struct Mq2Data : public AsyncBaseContext {
 static void GetMq2DataExecuteCB(napi_env env, void* data)
 {
     Mq2Data* ctx = reinterpret_cast<Mq2Data*>(data);
-    
-    // 调用底层驱动
-    int ret = get_mq2_smoke_ppm(ctx->adcChannel);
-    
-    if (ret < 0) {
-        // 失败：错误码写入基类 status_code
-        ctx->status_code = ret;
+    // 调用底层驱动，返回值改为 float
+    float ret = get_mq2_smoke_ppm(ctx->adcChannel);
+    if (ret < 0.0f) {
+        // 失败：错误码写入基类 status_code（float 转 int）
+        ctx->status_code = static_cast<int32_t>(ret);
     } else {
         // 成功：状态码为 0，浓度值存入派生类成员
         ctx->status_code = 0;

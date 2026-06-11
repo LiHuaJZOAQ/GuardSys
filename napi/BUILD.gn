@@ -2,7 +2,6 @@ import("//build/ohos.gni")
 
 ohos_shared_library("guardsys_napi") {
 
-    # Openharmony启用异常和RTTI (参考build/templates/cxx/cxx.gni,build/templates/rust/rust_template.gni)
     use_exceptions = true
     use_rtti = true
 
@@ -10,53 +9,6 @@ ohos_shared_library("guardsys_napi") {
         "//foundation/ace/napi/interfaces/kits",  # OpenHarmony NAPI 标准头文件
         "//foundation/arkui/napi/interfaces/inner_api",
         "../include",                             # 本项目底层驱动头文件
-        "//third_party/opencv/include",
-        "//third_party/opencv/build",
-        "//third_party/opencv/modules/core/include",
-        "//third_party/opencv/modules/imgproc/include",
-        "//third_party/opencv/modules/imgcodecs/include",
-        "//third_party/opencv/modules/objdetect/include",
-        "//third_party/SeetaFace2/FaceDetector/include",
-        "//third_party/SeetaFace2/FaceLandmarker/include",
-        "//third_party/SeetaFace2/FaceRecognizer/include",
-        "//third_party/SeetaFace2/QualityAssessor/include",
-        "//third_party/SeetaFace2/example/search/seeta",
-        "//third_party/SeetaFace2/SeetaNet/include",
-
-        # opencv 所有include目录
-        "//third_party/opencv/platforms/semihosting/include",
-        "//third_party/opencv/3rdparty/ade/ade-0.1.1f/sources/ade/include",
-        "//third_party/opencv/3rdparty/ffmpeg/include",
-        "//third_party/opencv/3rdparty/include",
-        "//third_party/opencv/3rdparty/openvx/include",
-        "//third_party/opencv/3rdparty/carotene/include",
-        "//third_party/opencv/3rdparty/quirc/include",
-        "//third_party/opencv/3rdparty/ittnotify/include",
-        "//third_party/opencv/modules/imgproc/include",
-        "//third_party/opencv/modules/video/include",
-        "//third_party/opencv/modules/videoio/include",
-        "//third_party/opencv/modules/photo/include",
-        "//third_party/opencv/modules/gapi/include",
-        "//third_party/opencv/modules/calib3d/include",
-        "//third_party/opencv/modules/core/include",
-        "//third_party/opencv/modules/features2d/include",
-        "//third_party/opencv/modules/imgcodecs/include",
-        "//third_party/opencv/modules/stitching/include",
-        "//third_party/opencv/modules/highgui/include",
-        "//third_party/opencv/modules/world/include",
-        "//third_party/opencv/modules/ml/include",
-        "//third_party/opencv/modules/ts/include",
-        "//third_party/opencv/modules/dnn/include",
-        "//third_party/opencv/modules/dnn/src/vkcom/include",
-        "//third_party/opencv/modules/dnn/src/ocl4dnn/include",
-        "//third_party/opencv/modules/dnn/src/tengine4dnn/include",
-        "//third_party/opencv/modules/flann/include",
-        "//third_party/opencv/modules/objdetect/include",
-        "//third_party/opencv/samples/ohos_samples/opencv_app_sample/entry/src/main/cpp/include",
-        "//third_party/opencv/samples/semihosting/include",
-        "//third_party/opencv/napi/common/log/include",
-        "//third_party/opencv/napi/js/napi/include",
-
     ]
     sources = [
         "guardsys_napi.h",
@@ -82,8 +34,7 @@ ohos_shared_library("guardsys_napi") {
     ]
 
     deps = [
-        "//third_party/opencv:opencv",
-        "//third_party/SeetaFace2:SeetaFace2"
+       
     ]
 
     cflags_cc = [
@@ -93,7 +44,6 @@ ohos_shared_library("guardsys_napi") {
         "-O2",
     ]
 
-    # 禁止警告被提升错误
     cflags_cc += [ "-Wno-error" ]
     
     part_name = "guardsys"

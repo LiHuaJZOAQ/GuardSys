@@ -30,8 +30,6 @@ guardsys/
 ├── @ohos.guardsys.d.ts       # OHOS NAPI TypeScript 声明文件
 ├── BUILD.gn                  # 模块编译配置总文件
 ├── bundle.json               # 模块配置文件
-├── migrate/                  # 第三方库移植相关文件目录
-├── models/                   # 模型文件目录
 ├── test/                     # 测试程序目录
 ├── include/                  # 接口定义头文件
 │   ├── alarm_control.h       # 蜂鸣器与RGB LED控制头文件
@@ -111,21 +109,21 @@ hdc shell reboot
 - [x] 【NAPI-1/4】完成SHT30的NAPI编写（未验证）
 - [x]  SHT30的NAPI验证通过
 - [x] 【NAPI-2/4】完成HC-SR501的NAPI编写（未验证）
-- [ ]  HC-SR501的NAPI验证通过
+- [x]  HC-SR501的NAPI验证通过
 - [x] 【NAPI-3/4】完成MQ-2的NAPI编写（未验证）
 - [x]  MQ-2的NAPI验证通过
 - [x] 【NAPI-4/4】完成蜂鸣器与RGB LED的NAPI编写（未验证）
-- [ ]  蜂鸣器的NAPI验证通过
+- [x]  蜂鸣器的NAPI验证通过
 - [x]  RGB LED的NAPI验证通过
 - [x]  基本传感器的NAPI编译通过
-- [ ]  基本传感器的NAPI验证通过
+- [x]  基本传感器的NAPI验证通过
 
 ### 人脸识别模块
 
-- [x]  OpenCV库移植
-- [x]  Seetaface库移植
-- [x]  人脸识别模块NAPI编写
-- [x]  人脸识别模块编译通过
+- [ ]  OpenCV库移植
+- [ ]  Seetaface库移植
+- [ ]  人脸识别模块NAPI编写
+- [ ]  人脸识别模块编译通过
 
 ## 许可证
 

@@ -1,4 +1,27 @@
-# 基于AI人脸识别的智能家居安防报警系统
+# 基于AI人脸识别的智能家居安防报警系统（南向）
+
+## 项目简介
+
+本项目基于OpenHarmony 4.0 Release版本，使用C/C++语言开发，实现了智能家居安防报警南向系统。系统包括人体红外传感器、烟雾传感器、温湿度传感器、蜂鸣器、RGB LED灯等硬件设备，实现了对应的南向驱动程序，并实现NAPI接口使得北向应用可以通过NAPI接口与硬件设备进行交互，实现了人体探测、烟雾检测、环境温湿度数据采集、危险报警等功能。
+
+## 技术栈
+
+C/C++ | OpenHarmony 4.0 Release | NAPI (Native API) | Ninja
+
+## 开发环境
+
+### 软件环境
+- Ubuntu 20.04
+- OpenHarmony 4.0 Release源码
+
+### 硬件环境
+- Union-Pi Tiger开发板(A311D)
+- HC-SR501人体红外传感器(GPIO协议)
+- MQ-2烟雾传感器(ADC协议)
+- SHT30温湿度传感器(I2C协议)
+- 蜂鸣器(GPIO协议)
+- RGB LED灯(GPIO协议)
+- 摄像头
 
 ## 南向项目目录结构
 
@@ -6,6 +29,10 @@
 guardsys/
 ├── @ohos.guardsys.d.ts       # OHOS NAPI TypeScript 声明文件
 ├── BUILD.gn                  # 模块编译配置总文件
+├── bundle.json               # 模块配置文件
+├── migrate/                  # 第三方库移植相关文件目录
+├── models/                   # 模型文件目录
+├── test/                     # 测试程序目录
 ├── include/                  # 接口定义头文件
 │   ├── alarm_control.h       # 蜂鸣器与RGB LED控制头文件
 │   ├── face_recognize.h      # OpenCV预处理与SeetaFace2识别头文件
@@ -24,7 +51,6 @@ guardsys/
 └── src/                      # 核心业务实现源码
     ├── alarm_control.c       # 报警声光执行逻辑实现
     ├── face_recognize.cpp    # 人脸采集、比对及去抖逻辑实现
-    ├── main.c                # 南向服务初始化与守护进程入口 (不含报警状态机) (quit temply)
     ├── sensor_hc_sr501.c     # 人体红外信号读取实现
     ├── sensor_mq2.c          # 烟雾ADC采集实现
     └── sensor_sht30.c        # 温湿度I2C读取实现
@@ -32,7 +58,7 @@ guardsys/
 
 ## 编译构建
 
-1.修改`bundle.json`中相关路径和子系统名称，然后在`vendor/unionman/unionpi_tiger/config.json`中添加组件。
+1. 修改`bundle.json`中相关路径和子系统名称，然后在`vendor/unionman/unionpi_tiger/config.json`中添加组件。
 ```json
 {
     "component": "guardsys",
@@ -42,7 +68,7 @@ guardsys/
 }
 ```
 
-2.运行编译构建指令
+2. 运行编译构建指令
 
 
 ```bash
@@ -59,17 +85,26 @@ guardsys/
 ./build.sh --product-name unionpi_tiger --ccache
 ```
 
-3.编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`，可以将其推送至开发板。
+3. 编译完成后可以找到编译产物`out/unionpi_tiger/sample/guardsys/libguardsys_napi.z.so`，可以将其推送至开发板。
 ```bash
 hdc shell mount -o remount,rw /
 hdc file send libguardsys_napi.z.so /system/lib/module
 ```
 注意需要同步推送opencv和seetaface的库文件，否则会报错，任何一个NAPI都无法使用。
 
+4. 配置开发板的相关权限，可以参考`util/init.A311D.cfg`的配置。
+
+```bash
+hdc shell mount -o remount,rw /vendor
+hdc file recv /vendor/etc/init.A311D.cfg ./
+hdc file send init.A311D.cfg /vendor/etc
+hdc shell reboot
+```
+
 ## 项目进度
 
 > [!WARNING]
-> 项目开发中，目前项目中已有代码未经验证，谨慎参考
+> 目前项目中人脸识别模块因硬件问题无法验证，代码仅供参考
 
 ### 基本传感器的NAPI
 
@@ -91,4 +126,11 @@ hdc file send libguardsys_napi.z.so /system/lib/module
 - [x]  Seetaface库移植
 - [x]  人脸识别模块NAPI编写
 - [x]  人脸识别模块编译通过
-- [ ]  人脸识别模块NAPI验证通过
+
+## 许可证
+
+本项目遵循[GNU Affero General Public License v3.0](LICENSE)许可证。
+
+## 贡献
+
+如果有任何建议或想要贡献代码，请随时提交Pull Request或创建Issue。

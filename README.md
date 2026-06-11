@@ -111,14 +111,14 @@ hdc shell reboot
 - [x] 【NAPI-1/4】完成SHT30的NAPI编写（未验证）
 - [x]  SHT30的NAPI验证通过
 - [x] 【NAPI-2/4】完成HC-SR501的NAPI编写（未验证）
-- [ ]  HC-SR501的NAPI验证通过
+- [x]  HC-SR501的NAPI验证通过
 - [x] 【NAPI-3/4】完成MQ-2的NAPI编写（未验证）
 - [x]  MQ-2的NAPI验证通过
 - [x] 【NAPI-4/4】完成蜂鸣器与RGB LED的NAPI编写（未验证）
-- [ ]  蜂鸣器的NAPI验证通过
+- [x]  蜂鸣器的NAPI验证通过
 - [x]  RGB LED的NAPI验证通过
 - [x]  基本传感器的NAPI编译通过
-- [ ]  基本传感器的NAPI验证通过
+- [x]  基本传感器的NAPI验证通过
 
 ### 人脸识别模块
 

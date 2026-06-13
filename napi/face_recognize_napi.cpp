@@ -1,5 +1,3 @@
-//to check , without any verification
-
 /**
  * @file face_recognize_napi.cpp
  * @brief 人脸识别 NAPI 异步桥接实现

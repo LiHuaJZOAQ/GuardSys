@@ -1,5 +1,3 @@
-//to check
-
 /**
  * @file alarm_control.c
  * @brief 报警声光控制底层实现

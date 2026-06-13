@@ -1,5 +1,3 @@
-//to check
-
 /**
  * @file alarm_control.h
  * @brief 报警声光控制底层驱动接口

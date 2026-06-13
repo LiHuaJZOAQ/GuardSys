@@ -1,5 +1,3 @@
-//to check , without any verification
-
 #include "face_recognize.h"
 #include "hilog/log.h"
 

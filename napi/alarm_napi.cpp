@@ -1,4 +1,3 @@
-//to do
 /**
 @file alarm_napi.cpp
 @brief 报警声光控制 NAPI 接口 (适配 Guardsys 架构)

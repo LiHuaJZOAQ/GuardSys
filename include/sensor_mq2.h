@@ -1,5 +1,3 @@
-//to check
-
 /**
  * @file sensor_mq2.h
  * @brief MQ-2 烟雾传感器底层驱动接口

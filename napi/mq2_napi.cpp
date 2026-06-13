@@ -1,4 +1,3 @@
-//to do
 /**
 @file mq2_napi.cpp
 @brief MQ-2 烟雾传感器 NAPI 接口 (适配 Guardsys 架构)

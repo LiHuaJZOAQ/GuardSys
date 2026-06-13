@@ -1,11 +1,6 @@
 declare namespace guardsys_napi {
-//    前端有问题时加入下面文档注释
-//    * @since 9
-//    * @syscap SystemCapability.Ability.AbilityRuntime.AbilityCore
-    
-    //new face modules , to check , without any verification
 
-    
+    //face modules
     /**
      * 人脸矩形框结构
      */
@@ -66,7 +61,7 @@ declare namespace guardsys_napi {
      * @syscap SystemCapability.Ability.AbilityRuntime.AbilityCore
      */
     function faceRecognize(imagePath: string): Promise<string>;
-    //new face modules end
+    //face modules end
 
 
     /**

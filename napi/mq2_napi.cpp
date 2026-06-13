@@ -1,12 +1,12 @@
 /**
-@file mq2_napi.cpp
-@brief MQ-2 烟雾传感器 NAPI 接口 (适配 Guardsys 架构)
-@details 
-- 继承 AsyncBaseContext 复用异步生命周期管理
-- 使用 QueueAsyncWork 统一提交异步任务
-- 导出 g_mq2_desc/g_mq2_desc_count 供 guardsys_napi.cpp 聚合
-- 移除独立模块注册，由 guardsys 中枢统一导出
-*/
+ * @file mq2_napi.cpp
+ * @brief MQ-2 烟雾传感器 NAPI 接口 (适配 Guardsys 架构)
+ * @details 
+ * - 继承 AsyncBaseContext 复用异步生命周期管理
+ * - 使用 QueueAsyncWork 统一提交异步任务
+ * - 导出 g_mq2_desc/g_mq2_desc_count 供 guardsys_napi.cpp 聚合
+ * - 移除独立模块注册，由 guardsys 中枢统一导出
+ */
 #include "guardsys_napi.h"  // 包含公共头文件，获取 AsyncBaseContext/QueueAsyncWork
 #include "sensor_mq2.h"     // 底层驱动接口
 
